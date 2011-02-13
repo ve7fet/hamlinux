@@ -1,3 +1,6 @@
 R1
 	-Initial import from svn.voyage.hk at R203
 
+R2
+	-Fixed 099-voyage script to test for initrd.img and add required symlinks
+
