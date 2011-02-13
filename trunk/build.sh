@@ -7,8 +7,7 @@ MOUNT_PROC_SH=/usr/local/sbin/mount-proc.sh
 export MKSQUASHFS_OPTIONS="-b 1048576"
 
 # define linux packages here for different editions
-VOYAGE_LINUX_PACKAGES="linux-image-2.6.32 \
-						madwifi-modules-2.6.32"
+VOYAGE_LINUX_PACKAGES="linux-image-2.6.37"
 
 if [ $(uname -m) == "x86_64" ] ; then
 	ARCH="_amd64"
