@@ -4,3 +4,10 @@ R1
 R2
 	-Fixed 099-voyage script to test for initrd.img and add required symlinks
 
+R3
+	-Changed all sources from ftp.tw.debian.org to mirror.peer1.net to speed up 
+	build time
+
+R4
+	-Remove voyage-one and voyage-mpd build options and related files
+

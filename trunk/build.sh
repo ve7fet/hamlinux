@@ -9,15 +9,6 @@ export MKSQUASHFS_OPTIONS="-b 1048576"
 # define linux packages here for different editions
 VOYAGE_LINUX_PACKAGES="linux-image-2.6.32 \
 						madwifi-modules-2.6.32"
-ONE_LINUX_PACKAGES="linux-image-2.6.33.7-rt29 \
-					madwifi-modules-2.6.33.7-rt29 \
-					batman-adv-modules-2.6.33.7-rt29 \
-					batmand-gateway-modules-2.6.33.7-rt29 \
-					dahdi-modules-2.6.33.7-rt29"
-MPD_LINUX_PACKAGES="linux-image-2.6.33.7-rt29 \
-					madwifi-modules-2.6.33.7-rt29 \
-					alsa-modules-2.6.33.7-rt29 \
-					lirc-modules-2.6.33.7-rt29"
 
 if [ $(uname -m) == "x86_64" ] ; then
 	ARCH="_amd64"
@@ -177,22 +168,6 @@ for TYPE in $1; do
 		sdk)
 			PreparePackageList "voyage voyage-cd voyage-sdk"
 			BuildSDK
-		;;
-		onecd)
-			PreparePackageList "voyage voyage-cd one"
-			BuildCD voyage-one-cd one "$ONE_LINUX_PACKAGES"
-		;;
-		one)
-			PreparePackageList "voyage one"
-			BuildDistro voyage-one one "$ONE_LINUX_PACKAGES"
-		;;
-		mpdcd)
-			PreparePackageList "voyage voyage-cd mpd"
-			BuildCD voyage-mpd-cd mpd "$MPD_LINUX_PACKAGES"
-		;;
-		mpd)
-			PreparePackageList "voyage voyage mpd"
-			BuildDistro voyage-mpd mpd "$MPD_LINUX_PACKAGES"
 		;;
 		test)
 			Chroot_MountProc binary/live/filesystem.dir "apt-get -y remove busybox live-initramfs"
