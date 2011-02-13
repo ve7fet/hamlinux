@@ -11,6 +11,6 @@ R3
 R4
 	-Remove voyage-one and voyage-mpd build options and related files
 
-R5
+R6
 	-Add tparc.org sources, change kernel to 2.6.37, remove madwifi modules
 
