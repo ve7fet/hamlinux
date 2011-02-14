@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DISTRO="voyage"
+DISTRO="hamlinux"
 MOUNT_PROC_SH=/usr/local/sbin/mount-proc.sh
 
 # define squashfs options here
