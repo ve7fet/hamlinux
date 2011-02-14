@@ -1,5 +1,5 @@
 #!/bin/sh
 
-HOST_NAME="voyage"
-echo "Setting hostname to voyage ..."
+HOST_NAME="hamlinux"
+echo "Setting hostname to hamlinux ..."
 echo "$HOST_NAME" > /etc/hostname
