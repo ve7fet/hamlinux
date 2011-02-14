@@ -14,3 +14,6 @@ R4
 R7
 	-Add tparc.org sources, change kernel to 2.6.37, remove madwifi modules
 
+R8
+	-Remove wifi related packages, add Amateur Radio Edition (Hamlinux) customizations
+

@@ -21,7 +21,6 @@ libnewt0.52 \
 libsigc++-2.0-0c2a \
 libxapian15 \
 man-db \
-nano \
 rsyslog \
 vim-common \
 vim-tiny \

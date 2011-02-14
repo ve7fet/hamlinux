@@ -103,8 +103,6 @@ echo "Done"
 #################################
 echo -n "Modifying /etc/modules ... "
 echo "natsemi" >> /etc/modules
-echo "hostap_pci" >> /etc/modules
-echo "options ath_pci autocreate=none ratectl=minstrel" >> /etc/modprobe.d/madwifi.conf
 echo "Done"
 
 #################################
@@ -129,8 +127,8 @@ echo "Done"
 # Modifying /etc/hosts
 #################################
 echo -n "Modifying /etc/hosts ... "
-echo "127.0.0.1 localhost voyage" >> /etc/hosts
-echo "127.0.1.1 voyage" >> /etc/hosts
+echo "127.0.0.1 localhost hamlinux" >> /etc/hosts
+echo "127.0.1.1 hamlinux" >> /etc/hosts
 echo "Done"
 
 
