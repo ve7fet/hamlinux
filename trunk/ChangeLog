@@ -20,3 +20,6 @@ R8
 R9
 	-More customizing
 
+R10
+	-Add the psmisc package to get the killall program
+

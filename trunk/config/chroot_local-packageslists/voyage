@@ -37,3 +37,4 @@ dhcp3-client
 bzip2
 minicom
 syslinux
+psmisc
