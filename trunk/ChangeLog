@@ -26,3 +26,6 @@ R10
 R11
 	-Remove PXE install and related utilities, some more customizations
 
+R12
+	-Add AX.25 packages
+

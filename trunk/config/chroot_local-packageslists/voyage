@@ -38,3 +38,6 @@ bzip2
 minicom
 syslinux
 psmisc
+libax25
+ax25apps
+ax25tools
