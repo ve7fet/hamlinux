@@ -6,7 +6,8 @@ README.live-cd
                        \/ \___/ \  / \___,\_  |\___|
                                _/_/        _'_|
                          { V o y a g e } - L i n u x
-                          < http://linux.voyage.hk >
+			     Amateur Radio Edition
+                    < http://hamlinux.googlecode.com >
 ==============================================================================
 
 This README.live-cd provide information on how to install Voyage Linux from the 
@@ -48,12 +49,7 @@ There are some additional packages installed for PXE and NFS server.  After
 starting Voyage, you can safely remove them by:
 
 	# remountrw
-	# apt-get remove syslinux atftpd nfs-kernel-server \
-                     bzip2 sg3-utils minicom
-
-After all, remove the last line in /etc/dnsmasq.more.conf:
-	conf-file=/etc/dnsmasq.pxe.conf
-
+	# apt-get remove syslinux 
 
 ==============================================================================
 Installing to a Thumb-drive or Disk-constraint system (net4826)
