@@ -23,3 +23,6 @@ R9
 R10
 	-Add the psmisc package to get the killall program
 
+R11
+	-Remove PXE install and related utilities, some more customizations
+

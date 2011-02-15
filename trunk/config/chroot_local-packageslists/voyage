@@ -1,5 +1,5 @@
 debconf-english
-dnsmasq
+#dnsmasq
 elvis-tiny
 iproute
 libsysfs2

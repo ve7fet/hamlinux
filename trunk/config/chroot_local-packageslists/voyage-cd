@@ -1,5 +1,5 @@
 #include <voyage>
 
-atftpd
+#atftpd
 #nfs-user-server
-nfs-kernel-server
+#nfs-kernel-server
