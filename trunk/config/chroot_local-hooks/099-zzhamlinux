@@ -23,3 +23,14 @@ if [ -f /etc/init.d/voyage-pxe ]; then
 	echo -n "Done."
 fi 
 
+#################################
+# Modifying /etc/default/voyage-util
+#################################
+echo -n "Modifying /etc/default/voyage-util ... "
+cat /etc/default/voyage-util | \
+sed -e 's/^VOYAGE_SYNC_DIRS=\"\"/VOYAGE_SYNC_DIRS=\"var\/ax25 var\/run\"/' \
+>  /etc/default/voyage-util.tmp
+mv  /etc/default/voyage-util.tmp  /etc/default/voyage-util
+echo "Done"
+
+
