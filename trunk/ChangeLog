@@ -29,3 +29,6 @@ R11
 R12
 	-Add AX.25 packages
 
+R13
+	-Add /var/ax25 and /var/run to the rw system
+
