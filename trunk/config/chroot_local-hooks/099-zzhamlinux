@@ -12,15 +12,15 @@ set -e
 echo "($0)"
 
 if [ -f /etc/dnsmasq.more.conf ]; then
-	echo -n "Removing dnsmasq.more.conf"
+	echo -n "Removing dnsmasq.more.conf ... "
 	rm -f /etc/dnsmasq.more.conf
-	echo -n "Done."
+	echo "Done."
 fi
 
 if [ -f /etc/init.d/voyage-pxe ]; then
-	echo -n "Removing voyage-pxe"
+	echo -n "Removing voyage-pxe ... "
 	rm -f /etc/init.d/voyage-pxe
-	echo -n "Done."
+	echo "Done."
 fi 
 
 #################################
@@ -31,6 +31,6 @@ cat /etc/default/voyage-util | \
 sed -e 's/^VOYAGE_SYNC_DIRS=\"\"/VOYAGE_SYNC_DIRS=\"var\/ax25 var\/run\"/' \
 >  /etc/default/voyage-util.tmp
 mv  /etc/default/voyage-util.tmp  /etc/default/voyage-util
-echo "Done"
+echo "Done."
 
 
