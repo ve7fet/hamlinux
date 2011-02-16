@@ -23,6 +23,16 @@ if [ -f /etc/init.d/voyage-pxe ]; then
 	echo "Done."
 fi 
 
+rm -f /var/lib/dhcp/dhclient.eth0.leases
+rm -f /var/lib/dhcp/dhclient.leases
+
+#if [ -e /var/lib/dhcp/dhclient.leases ]; then
+#        echo -n "Cleaning /var/lib/dhcp ... "
+#        rm -f /var/lib/dhcp/*
+#        echo "Done."
+#fi
+
+
 #################################
 # Modifying /etc/default/voyage-util
 #################################
