@@ -32,3 +32,6 @@ R12
 R13
 	-Add /var/ax25 and /var/run to the rw system
 
+R14
+	-Remove resolvconf
+

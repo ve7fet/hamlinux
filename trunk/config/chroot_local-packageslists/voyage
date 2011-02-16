@@ -29,7 +29,7 @@ ntpdate
 conntrack
 lsof
 bash-completion
-resolvconf
+#resolvconf
 makedev
 sysklogd
 klogd
