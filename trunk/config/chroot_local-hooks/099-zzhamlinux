@@ -28,7 +28,7 @@ fi
 #################################
 echo -n "Modifying /etc/default/voyage-util ... "
 cat /etc/default/voyage-util | \
-sed -e 's/^VOYAGE_SYNC_DIRS=\"\"/VOYAGE_SYNC_DIRS=\"var\/ax25 var\/run\"/' \
+sed -e 's/^VOYAGE_SYNC_DIRS=\"\"/VOYAGE_SYNC_DIRS=\"var\/ax25"/' \
 >  /etc/default/voyage-util.tmp
 mv  /etc/default/voyage-util.tmp  /etc/default/voyage-util
 echo "Done."

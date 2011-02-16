@@ -35,3 +35,5 @@ R13
 R14
 	-Remove resolvconf
 
+R15
+	-Take /var/run back out of voyage-utils (not required), add dialog package
