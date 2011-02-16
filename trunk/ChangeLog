@@ -37,3 +37,7 @@ R14
 
 R15
 	-Take /var/run back out of voyage-utils (not required), add dialog package
+
+R16
+	-Clean /var/lib/dhcp
+
