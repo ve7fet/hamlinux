@@ -23,14 +23,18 @@ if [ -f /etc/init.d/voyage-pxe ]; then
 	echo "Done."
 fi 
 
+echo -n "Cleaning /var/lib/dhcp ... "
 rm -f /var/lib/dhcp/dhclient.eth0.leases
 rm -f /var/lib/dhcp/dhclient.leases
+echo "Done."
 
-#if [ -e /var/lib/dhcp/dhclient.leases ]; then
-#        echo -n "Cleaning /var/lib/dhcp ... "
-#        rm -f /var/lib/dhcp/*
-#        echo "Done."
-#fi
+# I like to be able to set a color prompt, so get the .bashrc from
+# /etc/skel that supports that and overwrite the generic /root/.bashrc
+if [ -f /etc/skel/.bashrc ]; then
+        echo -n "Copying /etc/skel/.bashrc to /root ... "
+        cp /etc/skel/.bashrc /root
+        echo "Done."
+fi
 
 
 #################################

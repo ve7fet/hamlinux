@@ -41,3 +41,10 @@ R15
 R16
 	-Clean /var/lib/dhcp
 
+R17
+	-Change chroot_local-hooks/011-hostname to just touch /etc/hostname. Remove /etc/hosts stuff 
+	from chroot_local-hooks/043-setup_etc. Create an /etc/hosts and /etc/hostname in chroot_local-includes 
+	so that it doesn't get overwritten all the time, and actually sticks through building the image. Also 
+	copy /etc/skel/.bashrc to /root to give the option of color prompt and use bash completion automatically 
+	if it exists.
+
