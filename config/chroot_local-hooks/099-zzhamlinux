@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# /usr/share/live-helper/hooks/stripped - hook list for live-helper(7)
+# Copyright (C) 2006-2008 Daniel Baumann <daniel@debian.org>
+#
+# live-helper comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+# This is free software, and you are welcome to redistribute it
+# under certain conditions; see COPYING for details.
+
+set -e
+
+echo "($0)"
+
+if [ -f /etc/dnsmasq.more.conf ]; then
+	echo -n "Removing dnsmasq.more.conf ... "
+	rm -f /etc/dnsmasq.more.conf
+	echo "Done."
+fi
+
+if [ -f /etc/init.d/voyage-pxe ]; then
+	echo -n "Removing voyage-pxe ... "
+	rm -f /etc/init.d/voyage-pxe
+	echo "Done."
+fi 
+
+echo -n "Cleaning /var/lib/dhcp ... "
+rm -f /var/lib/dhcp/dhclient.eth0.leases
+rm -f /var/lib/dhcp/dhclient.leases
+echo "Done."
+
+# I like to be able to set a color prompt, so get the .bashrc from
+# /etc/skel that supports that and overwrite the generic /root/.bashrc
+if [ -f /etc/skel/.bashrc ]; then
+        echo -n "Copying /etc/skel/.bashrc to /root ... "
+        cp /etc/skel/.bashrc /root
+        echo "Done."
+fi
+
+
+#################################
+# Modifying /etc/default/voyage-util
+#################################
+echo -n "Modifying /etc/default/voyage-util ... "
+cat /etc/default/voyage-util | \
+sed -e 's/^VOYAGE_SYNC_DIRS=\"\"/VOYAGE_SYNC_DIRS=\"var\/ax25"/' \
+>  /etc/default/voyage-util.tmp
+mv  /etc/default/voyage-util.tmp  /etc/default/voyage-util
+echo "Done."
+
+
