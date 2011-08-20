@@ -2,15 +2,6 @@
 
 echo "($0)"
 
-if [ $(dpkg-query --show | cut -f1 | grep "^asterisk$" | wc -l) -gt 0  ] ; then
-    echo "($0) Building Voyage ONE.  No remove package"
-    exit 0
-fi
-if [ $(dpkg-query --show | cut -f1 | grep "^mpd$" | wc -l) -gt 0  ] ; then
-    echo "($0) Building Voyage MPD.  No remove package"
-    exit 0
-fi
-   
 RMPKGS="
 libtext-charwidth-perl \
 libtext-iconv-perl \
