@@ -1,4 +1,7 @@
-Change mirror sources to mirror.peer1.net from .tw Debian mirrors
+r24 - Change mirror sources to mirror.peer1.net from .tw Debian mirrors
 
-Remove build targets for one and mpd
+r25 - Remove build targets for one and mpd
+
+r26 - Change kernel package to 3.0.3 (custom built). Add tparc.org repository for custom packages. Modified 099-voyage script (test initrd) to allow custom kernel packages to be used.
+
 
