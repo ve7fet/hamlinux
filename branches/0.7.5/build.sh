@@ -7,7 +7,7 @@ MOUNT_PROC_SH=/usr/local/sbin/mount-proc.sh
 export MKSQUASHFS_OPTIONS="-b 1048576"
 
 # define linux packages here for different editions
-VOYAGE_LINUX_PACKAGES="linux-image-2.6.38 "
+VOYAGE_LINUX_PACKAGES="linux-image-3.0.3 "
 
 if [ $(uname -m) == "x86_64" ] ; then
 	ARCH="_amd64"
