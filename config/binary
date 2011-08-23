@@ -58,24 +58,24 @@ LB_ENCRYPTION="false"
 LB_GRUB_SPLASH=""
 
 # $LB_HOSTNAME: set hostname
-# (Default: voyage)
-LB_HOSTNAME="voyage"
+# (Default: hamlinux)
+LB_HOSTNAME="hamlinux"
 
 # $LB_ISO_APPLICATION: set iso author
-# (Default: Voyage Linux Live CD)
-LB_ISO_APPLICATION="Voyage Linux Live CD"
+# (Default: Voyage Linux Ham Radio Edition Live CD)
+LB_ISO_APPLICATION="Voyage Linux Ham Radio Edition Live CD"
 
 # $LB_ISO_PREPARER: set iso preparer
 # (Default: live-build 2.0.6-1; http://packages.qa.debian.org/live-build)
 LB_ISO_PREPARER="live-build 2.0.6-1; http://packages.qa.debian.org/live-build"
 
 # $LB_ISO_PUBLISHER: set iso publisher
-# (Default: Voyage Linux project; http://linux.voyage.hk/; voyage-linux@list.voyage.hk)
-LB_ISO_PUBLISHER="Voyage Linux project; http://linux.voyage.hk/; voyage-linux@list.voyage.hk"
+# (Default: Voyage Linux Ham Radio Edition project; http://hamlinux.googlecode.com/; hamlinux@tparc.org)
+LB_ISO_PUBLISHER="Voyage Linux Ham Radio Edition project; http://hamlinux.googlecode.com/; hamlinux@tparc.org"
 
 # $LB_ISO_VOLUME: set iso volume (max 32 chars)
-# (Default: Voyage Linux Live CD 0.7)
-LB_ISO_VOLUME="Voyage Linux Live CD 0.7"
+# (Default: Voyage Ham Radio Ed Live CD 0.7)
+LB_ISO_VOLUME="Voyage Ham Radio Ed Live CD 0.7"
 
 # $LB_JFFS2_ERASEBLOCK: set jffs2 eraseblock size
 # (Default: unset)
@@ -142,12 +142,12 @@ LB_SYSLINUX_CFG=""
 LB_SYSLINUX_MENU="true"
 
 # $LB_SYSLINUX_MENU_LIVE_ENTRY: set text to be used on the menu for live entries
-# (Default: Voyage Linux)
-LB_SYSLINUX_MENU_LIVE_ENTRY="Voyage Linux"
+# (Default: Voyage Linux Ham Radio)
+LB_SYSLINUX_MENU_LIVE_ENTRY="Voyage Linux Ham Radio"
 
 # $LB_SYSLINUX_MENU_LIVE_FAILSAFE_ENTRY: set text to be used on the menu for live entries (failsafe ones)
-# (Default: Voyage Linux (failsafe))
-LB_SYSLINUX_MENU_LIVE_FAILSAFE_ENTRY="Voyage Linux (failsafe)"
+# (Default: Voyage Linux Ham Radio (failsafe))
+LB_SYSLINUX_MENU_LIVE_FAILSAFE_ENTRY="Voyage Linux Ham Radio (failsafe)"
 
 # $LB_SYSLINUX_MENU_MEMTEST_ENTRY: set text to be used on the menu for memtest entry
 # (Default: Memory test)
