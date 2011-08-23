@@ -33,22 +33,6 @@ echo "Done"
 #echo "Done"
 
 #################################
-# Modifying /etc/dnsmasq.conf
-#################################
-echo -n "Modifying /etc/dnsmasq.conf ... "
-DNSMASQ_CONF=/etc/dnsmasq.conf 
-DNSMASQ_MORE_CONF=/etc/dnsmasq.more.conf
-if [ -f $DNSMASQ_CONF ] ; then
-	echo "conf-file=$DNSMASQ_MORE_CONF" >> $DNSMASQ_CONF
-fi	
-#echo "dhcp-leasefile=/var/tmp/dnsmasq.leases" >> $DNSMASQ_MORE_CONF
-#echo "dhcp-range=wlan0,10.1.10.10,10.1.10.250,24h" >> $DNSMASQ_MORE_CONF
-#echo "dhcp-range=eth1,10.1.20.10,10.1.20.250,24h" >> $DNSMASQ_MORE_CONF
-#echo "dhcp-range=eth2,10.1.30.10,10.1.30.250,24h" >> $DNSMASQ_MORE_CONF
-#echo "dhcp-range=eth3,10.1.40.10,10.1.40.250,24h" >> $DNSMASQ_MORE_CONF
-echo "Done"
-	
-#################################
 # Adding configuration for watchdog
 #################################
 echo -n "Adding configuration for watchdog ... "
@@ -105,31 +89,6 @@ echo "Done"
 echo -n "Modifying /etc/modules and /etc/modprobe.d/ ... "
 
 #echo "natsemi" >> /etc/modules
-#echo "hostap_pci" >> /etc/modules
-#echo "options ath_pci autocreate=none ratectl=minstrel" >> /etc/modprobe.d/madwifi.conf
-
-cat >> /etc/modprobe.d/madwifi.conf <<EOF
-#options ath_pci autocreate=none ratectl=minstrel
-
-blacklist ath_hal                                                              
-blacklist ath_pci                                                              
-blacklist ath_rate_amrr                                                        
-blacklist ath_rate_onoe                                                        
-blacklist ath_rate_sample                                                      
-blacklist ath_rate_minstrel
-blacklist wlan                                                                 
-blacklist wlan_acl                                                             
-blacklist wlan_ccmp                                                            
-blacklist wlan_scan_ap                                                         
-blacklist wlan_scan_sta                                                        
-blacklist wlan_tkip                                                            
-blacklist wlan_wep                                                             
-blacklist wlan_xauth                 
-
-#blacklist ath5k
-EOF
-
-sed -i -e "s/^blacklist ath5k/#blacklist ath5k/" /etc/modprobe.d/madwifi
 
 echo "Done"
 
@@ -152,24 +111,6 @@ echo "#vm.dirty_writeback_centisecs=100" >> /etc/sysctl.conf
 echo "Done"
 
 #################################
-# Modifying /root/.bashrc
-#################################
-echo -n "Modifying /root/.bashrc ... "
-#echo ". /etc/bash_completion" >> /root/.bashrc
-echo "alias bc='. /etc/bash_completion'" >> /root/.bashrc
-
-echo "Done"
-
-#################################
-# Modifying /etc/hosts
-#################################
-echo -n "Modifying /etc/hosts ... "
-echo "127.0.0.1 localhost voyage" >> /etc/hosts
-echo "127.0.1.1 voyage" >> /etc/hosts
-echo "Done"
-
-
-#################################
 # Modifying /etc/apt/sources.list
 #################################
 echo -n "Modifying /etc/apt/sources.list ... "
@@ -190,34 +131,3 @@ echo -n "Modifying /etc/usbmount/usbmount.conf ... "
 echo "FS_MOUNTOPTIONS=\"-fstype=vfat,utf8 -fstype=fat,utf8\"" >> /etc/usbmount/usbmount.conf
 
 echo "Done"
-
-#################################
-# Modifying /etc/hostapd
-#################################
-echo -n "Modifying /etc/hostapd ... "
-
-cat >> /etc/hostapd/hostapd.wlan0.conf <<EOF
-interface=wlan0
-driver=nl80211
-logger_syslog=-1
-logger_syslog_level=2
-logger_stdout=-1
-logger_stdout_level=2
-debug=4
-#dump_file=/tmp/hostapd.dump
-#ctrl_interface=/var/run/hostapd
-#ctrl_interface_group=0
-channel=6
-macaddr_acl=0
-auth_algs=3
-eapol_key_index_workaround=0
-eap_server=0
-wpa=3
-ssid=voyage-mpd
-wpa_passphrase=voyage-mpd
-wpa_key_mgmt=WPA-PSK
-wpa_pairwise=TKIP
-eapol_version=1
-EOF
-
-echo "Done."
