@@ -1,7 +1,8 @@
 #!/bin/sh
 
-echo "($0)"
+# Used to set the hostname here, but it works better to set it in
+# config/chroot_local-includes/etc, along with the hosts file.
+# Still need a blank /etc/hostname file at this point to keep some other 
+# scripts happy, so just touch it.
 
-HOST_NAME="voyage"
-echo "Setting hostname to voyage ..."
-echo "$HOST_NAME" > /etc/hostname
+touch /etc/hostname

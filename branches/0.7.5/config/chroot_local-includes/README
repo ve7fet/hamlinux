@@ -4,7 +4,8 @@
    \/ \___/ \  / \___,\_  |\___|     remountro - mount disk as read-only
            _/_/        _'_|          remove.docs - remove all docs and manpages
      { V o y a g e } - L i n u x
-      < http://linux.voyage.hk >   Version: 0.7
+          Ham Radio Edition
+      < http://hamlinux.tparc.org >   Version: 0.2
 
 1. Introduction
 ======================
@@ -22,6 +23,7 @@ Currently, Voyage Linux has the following editions:
     * Voyage Linux - the basic version
     * Voyage ONE - VoIP, mesh software, networking tools, etc.
     * Voyage MPD - Music Player Daemon
+    * Hamlinux - a custom distribution of Voyage Linux targeted at Amateur Radio operators
 
 All editions are delivered as distribution tarball and Live CD in i386 
 architecture. AMD64 architecture is available for Voyage Linux only. We also 
@@ -29,6 +31,9 @@ offer SDK to ease customizing Voyage Linux.
 
 For more information about Voyage Linux, please visit:
 	http://linux.voyage.hk
+
+For more information about Hamlinux, please visit:
+	http://hamlinux.googlecode.com
 
 2. Installation
 ======================
@@ -93,204 +98,7 @@ root password is "voyage", please change the root password after first login.
 ======================
 edit /etc/network/interface and uncomment the interface configuration section:
 
-# for hostap driver
-auto wlan0
-iface wlan0 inet static
-        address 10.1.10.1
-        netmask 255.255.255.0
-        broadcast 10.1.10.255
-        up iwconfig wlan0 essid voyage mode Master
-        up nat.sh wlan0 eth0 "10.1.10.0/24"
-        
-To enable wlan0 device (for Prism 2.5/hostap driver)
-
-# for atheros madwifi-ng driver
-auto ath0
-iface ath0 inet static
-        address 10.1.20.1
-        netmask 255.255.255.0
-        broadcast 10.1.20.255
-        madwifi-base wifi0
-        wireless-mode Master
-        up iwpriv ath0 mode 3
-        up iwconfig ath0 mode master
-        up iwconfig ath0 essid voyage
-        up iwconfig ath0 txpower auto
-        up iwconfig ath0 enc off
-        up iwconfig ath0 rate auto
-        up nat.sh ath0 eth0 "10.1.20.0/24"
-
-To enable ath0 device (for Atheros/madwifi-ng driver)
-
-A friendly script, nat.sh, is located in /usr/local/sbin/, generates all 
-necessary iptables rules for NAT'ing interface. nat.sh is now integrated to 
-work with nocat.  Syntax:
-	nat.sh <nat device> <output device> <network address>
-	
-	<nat device> - a tag to identify the NAT interface, no need to be a real 
-		device name, but should be unqiue if multiple NAT devices are 
-		configured
-	<output device> - the outbound device name for NAT
-	<network address> - the IP network with mask for NAT
-
-3.2 DHCP/DNS - dnsmasq
-======================
-DHCP support from dnsmasq is now enabled by default. 
-
-Edit /etc/dnsmasq.more.conf and there are following lines:
-
-dhcp-leasefile=/var/tmp/dnsmasq.leases
-dhcp-range=wlan0,10.1.10.10,10.1.10.250,24h
-dhcp-range=eth1,10.1.20.10,10.1.20.250,24h
-dhcp-range=eth2,10.1.30.10,10.1.30.250,24h
-dhcp-range=eth3,10.1.40.10,10.1.40.250,24h
-
-dnsmasq will provide IP address lease 10.1.10.10-250, 10.1.20.10-250, 
-10.1.30.10-250, 10.1.40.10-250.
-
-Comment out all the lines in /etc/dnsmasq.more.conf to disable DHCP in dnsmasq.
-
-3.3 Hostap
-======================
-Kernel source was patched to include the current driver version 0.4.7 for 
-2.6.8 and 2.6.12 voyage kernels.  Starting from 2.6.14, it is included in 
-stock kernel.  The hostap driver in all voyage kernels has 
-PRISM2_NON_VOLATILE_DOWNLOAD enabled to allow non-volatile flashing of 
-firmware.  
-
-(http://hostap.epitest.fi/)
-
-3.4 Prism54
-======================
-Prism54 driver is included in voyage kernel.  Voyage Linux already bundled 
-the required firmware in /usr/lib/hotplug/firmware/isl3890.
-
-(http://www.prism54.org)
-
-3.5 Madwifi
-======================
-Voyage distro is now using madwifi-ng driver as default.  
-To configure atheros device, the full interface definition should look like:
-
-    auto ath0
-	iface ath0 inet static
-	        address 10.1.20.1
-	        netmask 255.255.255.0
-	        broadcast 10.1.20.255
-	        madwifi-base wifi1
-	        wireless-mode Master
-	        up iwpriv ath0 mode 3
-	        up iwconfig ath0 mode master
-	        up iwconfig ath0 essid voyage
-	        up iwconfig ath0 txpower auto
-	        up iwconfig ath0 enc off
-	        up iwconfig ath0 rate auto
-	        up nat.sh ath0 eth0 "10.1.20.0/24"
-	
-Please note tht voyage kernel does not comes with madwifi driver anymore.  
-Instead, they are available in separate module package.  
-
-madwifi-ng has the default auto create option which will create the VAP device 
-in STA mode.  To disable autocreate option, in /etc/modules you can add:
-
-   ath_pci autocreate=none
-   
-or add a new files /etc/modprobe.d/madwifi with the followng line:
-
-   options ath_pci autocreate=none
-
-(http://www.madwifi.org)
-
-3.5 Bridging 
-====================== 
-The most common way to WDS bridge wireless (ath0 & ath1), LAN (eth0) as follow:
-
-	auto br0
-	iface br0 inet static
-	       address 192.168.1.2
-	       netmask 255.255.255.0
-	       network 192.168.1.0
-	       broadcast 192.168.1.255
-	       gateway 192.168.1.1
-	       bridge_ports eth0 ath0 ath1
-	       pre-up wlanconfig ath0 create wlandev wifi0 wlanmode ap
-	       pre-up wlanconfig ath1 create wlandev wifi0 wlanmode wds
-	       pre-up iwpriv ath0 mode 11g
-	       pre-up iwconfig ath0 essid "voyage-wds" channel 1
-	       up ifconfig ath0 down ; ifconfig ath0 up # this is a workaround
-	       up iwpriv ath1 wds 1
-	       up iwpriv ath1 wds_add AA:BB:CC:DD:EE:FF
-	       up ifconfig ath1 down ; ifconfig ath1 up # this is a workaround
-	       post-down wlanconfig ath0 destroy
-	       post-down wlanconfig ath1 destroy
-	       
-Removing the ath1 (WDS VAP) line, a simple wireless bridge is setup instead.
-
-There are some samples in /etc/network/interface to ease the setup of bridge.
-
-3.8 Hostapd
-======================
-To enable hostapd, edit /etc/default/hostapd and add the following line:
-
-RUN_DAEMON="yes"
-
-A sample /etc/hostapd/hostapd.conf is like below:
-
-#bridge=br0   #uncomment this line if bridged.
-interface=ath0
-driver=madwifi
-logger_syslog=-1
-logger_syslog_level=2
-logger_stdout=-1
-logger_stdout_level=2
-debug=4
-dump_file=/tmp/hostapd.dump
-ctrl_interface=/var/run/hostapd
-ctrl_interface_group=0
-macaddr_acl=0
-auth_algs=3
-eapol_key_index_workaround=0
-eap_server=0
-wpa=3
-ssid=voyage-wds
-wpa_passphrase=voyage-wds
-wpa_key_mgmt=WPA-PSK
-wpa_pairwise=TKIP
-eapol_version=1
- 
-
-3.9 wpa-supplicant
-======================
-
-If you want to connect to a WPA-PSK enabled AP, first generate the 
-/etc/wpa_suppliant.conf.  For example, if the essid and pre-shared key are 
-both "voyage-wds", execute the following commands:
-
-# wpa_passphrase voyage-wds voyage-wds>> /etc/wpa_supplicant/wpa_supplicant.conf
-
-Then, edit /etc/wpa_supplicant/wpa_supplicant.conf and adding key_mgmt and 
-proto parameters:
-
-network={
-    ssid="voyage-wds"
-    #psk="voyage-wds"
-    psk=76ab47787aa8b560895f617dd351ad9d32faa86232f5366b6554832073d07481
-    key_mgmt=WPA-PSK
-    proto=WPA
-#   proto=RSN	# uncomment for WPA2
-}
-
-Edit /etc/network/interfaces and add the following entries:
-
-auto ath0
-iface ath0 inet dhcp
-        madwifi-base wifi0
-        wireless-mode Managed
-        wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
-
-This will create ath0 for wifi0 devices, using the specified wpa_supplicant.conf
-
-3.10 LED Support
+3.2 LED Support
 ======================
 Voyage kernel >= 2.6.23 (as in Voyage 0.5) comes with LED driver for WRAP, ALIX 
 and Soekris 48xx boards.
@@ -343,57 +151,7 @@ driver will be automatically enabled at boot. To disable this feature, edit
 /etc/default/voyage-util and update VOYAGE_LED variable to "NO":
 	VOYAGE_LEDS="NO"
 	
-3.10 Ath9k support
-======================
-Ath9k uses nl80211 driver for hostap functions. So, in 
-/etc/hostapd/hostapd.conf, append the following at the end of the file.
-
-driver=nl80211
-interface=wlan0
-logger_syslog=-1
-logger_syslog_level=2
-logger_stdout=-1
-logger_stdout_level=2
-debug=4
-dump_file=/tmp/hostapd.dump
-ctrl_interface=/var/run/hostapd
-ctrl_interface_group=0
-macaddr_acl=0
-auth_algs=3
-eapol_key_index_workaround=0
-eap_server=0
-wpa=3
-ssid=voyage-wpa
-wpa_passphrase=voyage-wpa
-wpa_key_mgmt=WPA-PSK
-wpa_pairwise=TKIP
-channel=11
-hw_mode=g
-eapol_version=1
-
-Please note that Voyage Linux use wlan0 for ath9k interface. From the above 
-configure, WPA/WPA2 is configured, using voyage-wpa as both SSID and 
-pre-shared key, running 802.11g mode on channel 11. eapol_version=1 is set for 
-backward compatibility to my damn old 2001 iBook. 
-
-At last, don't forget to enable wlan0 in /etc/network/interfaces:
-
-auto wlan0
-iface wlan0 inet static
-        address 10.1.10.1
-        netmask 255.255.255.0
-        broadcast 10.1.10.255
-        up nat.sh wlan0 eth0 "10.1.10.0/24"
-
-You don't need to set anything with iw tools since hostapd will do it for you. 
-Now, make sure hostapd is enabled in /etc/default/hostapd and restart wlan0 
-interface and hostapd by:
-
-# ifdown wlan0
-# ifup wlan0
-# /etc/init.d/hostapd restart
-
-3.11 voyage-sync script
+3.3 voyage-sync script
 =======================
 
 Starting from 0.6, the legacy /ro and /rw directories will be replaced by
@@ -616,13 +374,6 @@ Getting start to build Voyage Linux under Debian r5.0(lenny) or Voyage SDK:
 
 6.3 Known Issues
 ======================
-- when running madwifi driver with AP mode, stuck beacon problem may occur:
-    wifi0: ath_bstuck_tasklet: Stuck beacon; resetting (beacon miss )
-  When this error happens, sometime it is not recoverable.  After some test,
-  it is found that the most stable vesion is 0.9.4-rc2, fallback by:
- # wget http://www.voyage.hk/dists/experimental/madwifi/madwifi-modules-2.6.32-voyage_0.9.4~rc2-1+8.0-1_i386.deb
- # apt-get install madwifi-modules-2.6.32-voyage_0.9.4~rc2-1+8.0-1_i386.deb
-  
 - When using CF card for heavy write operation, the following settings on 
   pdflush should be applied (Recommended by PCEngines). 
     # echo 500 > /proc/sys/vm/dirty_expire_centisecs
@@ -688,48 +439,7 @@ You can find README.live-cd and README.pxe from the root direcory of Live CD.
 ======================
 This section documents deprecated documentation which is no longer supported.
 
-7.1 NoCatSplash 
-======================
-NoCatSplash is included in Voyage Linux, but it is disabled by default.  Edit 
-/etc/default/nocatsplash and set ENABLE="true" to enable it.  You will can start 
-or stop NoCatSplash by 
-	/etc/init.d/nocatsplash [start|stop]
-	
-Next, you will also need to edit /etc/nocat.conf to setup NoCatSplash properly.  
-The most common way is to add the following lines at the end of /etc/nocat.conf:
-ExternalDevice  eth0  
-InternalDevice  wlan0
-LocalNetwork    10.1.10.0/24
-
-Make sure that wlan0 matches the LocalNetwork IP address, you should double-
-check that from ifconfig.
-
-7.2 NoCatAuth
-======================
-NoCatAuth is not included in Voyage Linux.  However, it can be installed by 
-running:
-	apt-get install nocatauth-gateway
-	
-Same as NoCatSplash, set ENABLE="true" in /etc/default/nocatauth-gateway to 
-enable it in boot up.   Note that nocat.conf is located in 
-/etc/nocatauth/gateway and the most common to configure nocatauth-gateway is 
-appending the following to nocat.conf:
-
-ExternalDevice  eth0  
-InternalDevice  wlan0
-LocalNetwork    10.1.10.0/24
-
-You may also want to touch GatewayMode (default=Passive):
-GatewayMode [Passive|Captive|Open]
-
-It is better to un-install NoCatSplash by "apt-get remove nocatsplash" and 
-"rm /etc/nocat.conf" explicitly to avoid confusion.
-
-As nocatauth requires perl to run, you are required to have a larger disk space 
-to run (probably 128MB).  Please also make sure that you can only run either 
-NoCatSplash or NoCatAuth, not both.
-
-7.3 Development (0.5 or before)
+7.1 Development (0.5 or before)
 ======================
 Voyage Linux is completely buildable through customization framework. You can 
 access the CVS Web Repository at: 
@@ -842,6 +552,6 @@ The customization scripts can also be found in CVS and nightly tarball as well.
 	* Sarge, 2.6.8 - Voyage 0.1
 	
 ======================
-Last Updated: 20110627
+Last Updated: 20110822
 ======================
 
