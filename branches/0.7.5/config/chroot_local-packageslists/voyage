@@ -37,3 +37,6 @@ minicom
 syslinux
 psmisc
 dialog
+libax25
+ax25apps
+ax25tools
