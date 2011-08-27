@@ -5,3 +5,6 @@ r25 - Remove build targets for one and mpd
 r26 - Change kernel package to 3.0.3 (custom built). Add tparc.org repository for custom packages. Modified 099-voyage script (test initrd) to allow custom kernel packages to be used.
 
 r27 - Add all the Hamlinux customizations. Remove the included lilo packages, since they get pulled in with apt.
+
+r28 - Add AX.25 packages
+
