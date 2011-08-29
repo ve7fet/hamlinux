@@ -1,0 +1,6 @@
+Initial release. 
+
+This branch takes Hamlinux and customizes it some more. It is intended to run on a 
+PC Engines Alix3 SBC (custom kernel).
+
+It also installs FPAC Amateur Radio Switching Software, along with vim and ntp.
