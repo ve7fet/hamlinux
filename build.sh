@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DISTRO="hamlinux"
+DISTRO="tparc"
 MOUNT_PROC_SH=/usr/local/sbin/mount-proc.sh
 
 # define squashfs options here
