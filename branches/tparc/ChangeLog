@@ -1,6 +1,13 @@
 Initial release. 
 
-This branch takes Hamlinux and customizes it some more. It is intended to run on a 
-PC Engines Alix3 SBC (custom kernel).
+This branch takes Hamlinux and customizes it some more. It is intended to run 
+on a PC Engines Alix3 SBC (custom kernel).
 
 It also installs FPAC Amateur Radio Switching Software, along with vim and ntp.
+
+The custom kernel strips out a bunch of stuff we aren't going to use, 
+compiles in AMD Geode specific drivers, etc.
+
+A note about using the ALIX 3D3 (built-in VGA). You need to add the boot 
+parameter leds-alix2.force=1 to get the on-board LED's to work (they 
+are not detected properly on this platform).
