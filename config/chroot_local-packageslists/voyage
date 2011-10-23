@@ -37,6 +37,7 @@ minicom
 syslinux
 psmisc
 dialog
+telnet
 libax25
 ax25apps
 ax25tools
