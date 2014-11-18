@@ -54,12 +54,7 @@ There are some additional packages installed for PXE and NFS server.  After
 starting Voyage, you can safely remove them by:
 
 	# remountrw
-	# apt-get remove syslinux atftpd nfs-kernel-server \
-                     bzip2 sg3-utils minicom
-
-After all, remove the last line in /etc/dnsmasq.more.conf:
-	conf-file=/etc/dnsmasq.pxe.conf
-
+	# apt-get remove syslinux 
 
 ==============================================================================
 Installing to a Thumb-drive or Disk-constraint system (net4826)

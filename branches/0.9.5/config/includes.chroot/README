@@ -101,174 +101,7 @@ In /etc/network/interfaces,
 auto eth0
 iface eth0 inet dhcp
 
-auto br0
-iface br0 inet dhcp
-        bridge_ports eth0 eth1
-
-This will create a bridge interface br0 with eth0 and eth1 as slave.
-
-For wireless device configuration, edit /etc/network/interface and have
-the follow interface configuration section:
-
-# for nl80211 driver (e.g. ath5k, ath9k, p54pci)
-auto wlan0
-iface wlan0 inet static
-       address 10.1.10.1
-       netmask 255.255.255.0
-       broadcast 10.1.10.255
-       hostapd /etc/hostapd/hostapd.wlan0.conf
-       up nat.sh wlan0 eth0 "10.1.10.0/24"
-
-Also see below for hostapd configuration:
-
-# for hostap driver (Prism 2.5)
-auto wlan0
-iface wlan0 inet static
-        address 10.1.10.1
-        netmask 255.255.255.0
-        broadcast 10.1.10.255
-        up iwconfig wlan0 essid voyage mode Master
-        up nat.sh wlan0 eth0 "10.1.10.0/24"
-        
-Both enable wlan0 device as wireless interface in a separate network and the
-wireless interface runs in NAT mode.
-
-A friendly script, nat.sh, is located in /usr/local/sbin/, generates all 
-necessary iptables rules for NAT'ing interface. nat.sh is now integrated to 
-work with nocat.  Syntax:
-	nat.sh <nat device> <output device> <network address>
-	
-	<nat device> - a tag to identify the NAT interface, no need to be a real 
-		device name, but should be unqiue if multiple NAT devices are 
-		configured
-	<output device> - the outbound device name for NAT
-	<network address> - the IP network with mask for NAT
-
-3.2 Hostapd
-======================
-Assume you have nl80211 compatible wireless driver, e.g. ath5k, ath9k, p54pci, 
-and want to setup a wireless access points where wireless client are in a NAT 
-network.  Add the following lines in /etc/network/interfaces:
-
-auto wlan0
-iface wlan0 inet static
-        address 10.1.10.1
-        netmask 255.255.255.0
-        broadcast 10.1.10.255
-        hostapd /etc/hostapd/hostapd.wlan0.conf
-        up nat.sh wlan0 eth0 "10.1.10.0/24"
-        
-This assumes you wireless device is wlan0 and the above will setup wlan0 
-interface with IP address 10.1.10.1 assigned and all traffics are NAT'd to eth0.
-All wireless clients connected to this access point will be assigned with IP 
-range 10.1.10.0/24.
-
-Then create a file /etc/hostapd/hostapd.wlan0.conf:
-
-interface=wlan0
-driver=nl80211
-logger_syslog=-1
-logger_syslog_level=2
-logger_stdout=-1
-logger_stdout_level=2
-debug=4
-#dump_file=/tmp/hostapd.dump
-#ctrl_interface=/var/run/hostapd
-#ctrl_interface_group=0
-channel=6
-hw_mode=g
-macaddr_acl=0
-auth_algs=3
-eapol_key_index_workaround=0
-eap_server=0
-wpa=3
-ssid=voyage-wpa
-wpa_passphrase=voyage-wpa
-wpa_key_mgmt=WPA-PSK
-wpa_pairwise=TKIP
-eapol_version=1
-
-The above configuration will setup both WPA and WPA2.  To setup WPA2 only, 
-set "wpa=2".  The wireless AP service name (ESSID) will be "voyage-wpa" with 
-passphrase "voyage-wpa".  Change ssid, wpa_passphrase and channel values if 
-desirable.
-
-Then run: 
-# ifup wlan0
-
-to activate the wireless access point now.  The above setting also 
-automatically enables wireless access point after reboot.
-
-3.3 wpa-supplicant
-======================
-
-If you run nl80211 compatible wireless driver, e.g. ath5k, ath9k, p54pci, 
-and want to connect to an existing wireless access point or router in your 
-network, update with the following lines in /etc/network/interfaces:
-
-auto wlan0
-iface wlan0 inet dhcp
-        wpa-driver wext
-        wpa-ssid <your ssid>
-        wpa-psk <your WPA shared key>
-        wpa-key-mgmt WPA-PSK
-        wpa-pairwise TKIP
-        wpa-group TKIP
-        wpa-proto WPA
-        wireless-mode Managed
-
-Replace <your ssid> to the SSID and <your WPA shared key> to WPA shared key of 
-your wireless access point / router. If you use WPA2 in your wireless network, 
-you need to change wpa-proto to "RSN".  You also need to change 
-wpa-pairwise and wpa-group to "CCMP TKIP" as well.
-Then run: 
-# ifup wlan0
-
-to connect to the wireless access point / router now.  The above settings also
-automatically connect to wireless access point / router after reboot.
-
-3.4 Bridging
-======================
-To setup a bridge br0 with slave device eth0 and wlan0, add the following in
-/etc/network/interface
-
-auto br0
-iface br0 inet dhcp
-        bridge_ports eth0 wlan0
-
-The wlan0 device (for AP functionality) setup will be slightly different:
-
-auto eth0
-    iface eth0 inet manual
-
-auto wlan0
-iface wlan0 inet manual
-    hostapd /etc/hostapd/hostapd.wlan0.conf
-
-Then run:
-
-# ifup br0 
-
-to activate the wireless bridge device.
-
-3.5 DHCP/DNS - dnsmasq
-======================
-DHCP support from dnsmasq is now enabled by default. 
-
-Edit /etc/dnsmasq.more.conf and there are following lines:
-
-dhcp-leasefile=/var/tmp/dnsmasq.leases
-dhcp-range=wlan0,10.1.10.10,10.1.10.250,24h
-dhcp-range=eth1,10.1.20.10,10.1.20.250,24h
-dhcp-range=eth2,10.1.30.10,10.1.30.250,24h
-dhcp-range=eth3,10.1.40.10,10.1.40.250,24h
-
-dnsmasq will provide IP address lease 10.1.10.10-250, 10.1.20.10-250, 
-10.1.30.10-250, 10.1.40.10-250.
-
-Comment out all the lines in /etc/dnsmasq.more.conf to disable DHCP in dnsmasq.
-
-3.6 LED Support
+3.2 LED Support
 ======================
 Voyage kernel >= 2.6.23 (from Voyage 0.5) comes with LED driver for WRAP, ALIX 
 and Soekris 48xx boards.
@@ -329,7 +162,7 @@ leds-alix2.force=1
 in the kernel boot parameter (i.e. /boot/grub/menu.lst).  This is because
 ALIX3D3 is with different BIOS version than ALIX3D2.
 	
-3.7 voyage-sync script
+3.3 voyage-sync script
 =======================
 
 Starting from 0.6, the legacy /ro and /rw directories will be replaced by
@@ -707,6 +540,6 @@ NoCatSplash or NoCatAuth, not both.
     * Sarge, 2.6.8 - Voyage 0.1
 	
 ======================
-Last Updated: 20141105
+Last Updated: 20141118
 ======================
 
