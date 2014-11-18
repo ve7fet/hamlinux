@@ -41,3 +41,5 @@ netcat-traditional
 dialog
 locales
 vim
+ntp
+telnet
