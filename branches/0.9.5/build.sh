@@ -8,8 +8,6 @@ export MKSQUASHFS_OPTIONS="-b 1048576"
 
 # define linux packages here for different editions
 VOYAGE_LINUX_PACKAGES="linux-image-3.14.12"
-ONE_LINUX_PACKAGES="linux-image-3.14.12 dahdi-modules-3.14.12"
-MPD_LINUX_PACKAGES="$VOYAGE_LINUX_PACKAGES"
 
 if [ $(uname -m) == "x86_64" ] ; then
 	ARCH="_amd64"
@@ -225,33 +223,6 @@ for TYPE in $1; do
 			PreparePackageList "voyage voyage-cd voyage-sdk"
 			BuildSDK
 		;;
-		onecd)
-			Banner "Voyage ONE Live CD"
-			PreparePackageList "voyage voyage-cd one"
-			BuildHybrid voyage-one-cd one "$ONE_LINUX_PACKAGES"
-		;;
-		one)
-			Banner "Voyage ONE Tarball"
-			PreparePackageList "voyage one"
-			BuildDistro voyage-one one "$ONE_LINUX_PACKAGES"
-		;;
-		mpdcd)
-			Banner "Voyage MPD Live CD"
-			PreparePackageList "voyage voyage-cd mpd"
-			lb config -k "voyage-rt"
-			BuildHybrid voyage-mpd-cd mpd "$MPD_LINUX_PACKAGES"
-		;;
-		mpd)
-			Banner "Voyage MPD Tarball"
-			PreparePackageList "voyage mpd"
-			lb config -k "voyage-rt"
-			BuildDistro voyage-mpd mpd "$MPD_LINUX_PACKAGES"
-		;;
-#		mpdse2012)
-#			Banner "Voyage MPD SE2012 Tarball"
-#			PreparePackageList "voyage mpdse2012"
-#			BuildDistro voyage-mpdse2012 mpdse2012 "$MPD_LINUX_PACKAGES"
-#		;;
 		test)
 			Chroot_MountProc binary/live/filesystem.dir "apt-get -y remove busybox live-initramfs"
 			Chroot_MountProc binary/live/filesystem.dir "apt-get -y autoremove"
