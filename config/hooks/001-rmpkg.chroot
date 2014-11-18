@@ -25,7 +25,6 @@ libxapian15 \
 man-db \
 rsyslog \
 whiptail \
-dash\
 \
 "
 
