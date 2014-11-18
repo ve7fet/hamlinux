@@ -61,7 +61,7 @@ BuildTar()
 BuildImg()
 {
 	lb clean
-	lb config -b usb-hdd --binary-filesystem fat16 --chroot-filesystem squashfs --linux-packages="$VOYAGE_LINUX_PACKAGES"
+	lb config -b hdd --binary-filesystem fat16 --chroot-filesystem squashfs --linux-packages="$VOYAGE_LINUX_PACKAGES"
 	lb build
 
 	if [ -f binary.img ] ; then
