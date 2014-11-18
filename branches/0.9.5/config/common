@@ -13,7 +13,7 @@ LB_APT_FTP_PROXY=""
 
 # $LB_APT_HTTP_PROXY: set apt/aptitude http proxy
 # (Default: autodetected or empty)
-LB_APT_HTTP_PROXY="http://192.168.1.101:3128"
+LB_APT_HTTP_PROXY=""
 
 # $LB_APT_PIPELINE: set apt/aptitude pipeline depth
 # (Default: )
@@ -73,7 +73,7 @@ LB_INITSYSTEM="sysvinit"
 
 # $LB_FDISK: set fdisk program
 # (Default: autodetected)
-LB_FDISK="fdisk.distrib"
+LB_FDISK="fdisk"
 
 # $LB_LOSETUP: set losetup program
 # (Default: autodetected)
