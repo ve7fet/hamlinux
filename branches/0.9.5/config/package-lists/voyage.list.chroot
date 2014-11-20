@@ -43,3 +43,6 @@ locales
 vim
 ntp
 telnet
+libax25
+ax25apps
+ax25tools
